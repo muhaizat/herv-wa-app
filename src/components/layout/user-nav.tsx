@@ -14,15 +14,26 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { toast } from 'sonner'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 export function UserNav() {
   const router = useRouter()
   const supabase = createClientComponentClient()
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    router.refresh()
-    router.push('/auth/login')
+    try {
+      const { error } = await supabase.auth.signOut()
+      if (error) {
+        toast.error('Gagal logout: ' + error.message)
+        return
+      }
+      toast.success('Berjaya logout!')
+      router.refresh()
+      router.push('/auth/login')
+    } catch (err) {
+      toast.error('Error semasa logout!')
+    }
   }
 
   return (
@@ -54,6 +65,10 @@ export function UserNav() {
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <div className="px-2 py-1.5">
+          <ThemeToggle />
+        </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer" onClick={handleSignOut}>
           Log out

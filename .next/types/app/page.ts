@@ -1,4 +1,4 @@
-// File: /Users/mh/Documents/Web Projects/herv-wa-app/src/app/page.tsx
+// File: /Users/mh/Documents/Web Projects/herv-wa-app-1/src/app/page.tsx
 import * as entry from '../../../src/app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
